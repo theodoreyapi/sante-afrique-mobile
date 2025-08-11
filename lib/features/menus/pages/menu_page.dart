@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sante_afrique/core/constants/constants.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../core/themes/themes.dart';
+import '../../echange/echange.dart';
+import '../../emploi/emploi.dart';
+import '../../espace/espace.dart';
+import '../../home/home.dart';
+import '../../magazine/magazine.dart';
+import '../../setting/setting.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -14,11 +19,11 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   int currentPageIndex = 0;
 
-  final Widget _home = Container();
-  final Widget _echange = Container();
-  final Widget _espace = Container();
-  final Widget _emploi = Container();
-  final Widget _menus = Container();
+  final Widget _home = HomePage();
+  final Widget _echange = EchangePage();
+  final Widget _espace = EspacePage();
+  final Widget _emploi = EmploiPage();
+  final Widget _menus = SettingPage();
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +31,26 @@ class _MenuPageState extends State<MenuPage> {
       appBar: AppBar(
         backgroundColor: appWhite,
         centerTitle: true,
-        title: Image.asset(
-          "assets/images/logo.png",
-          height: 40,
-        ),
+        title: Image.asset("assets/images/logo.png", height: 40),
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
             onTap: () {},
-            child: Icon(Icons.search_outlined, size: 25.sp,),
+            child: Icon(Icons.search_outlined, size: 25.sp),
           ),
         ),
         actions: [
           Padding(
             padding: EdgeInsets.all(2.w),
-            child: Image.asset("assets/images/icon.png"),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MagazinePage()),
+                );
+              },
+              child: Image.asset("assets/images/icon.png"),
+            ),
           ),
         ],
       ),
