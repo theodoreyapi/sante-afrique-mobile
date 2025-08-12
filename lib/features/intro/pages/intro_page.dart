@@ -51,18 +51,10 @@ class _IntroPageState extends State<IntroPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Image.asset(
-                "assets/images/logo.png",
-                height: 86,
-                width: 199,
-              ),
-            ),
-            Expanded(
-              flex: 3,
               child: PageView.builder(
                 itemCount: demoData.length,
                 controller: _pageController,
@@ -79,50 +71,10 @@ class _IntroPageState extends State<IntroPage> {
                     ),
               ),
             ),
-            Gap(2.h),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Gap(2.w),
-                Expanded(
-                  child: SubmitButton(
-                    AppConstants.btnRegister,
-                    onPressed: () async {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                      );
-                    },
-                  ),
-                ),
-                Gap(2.w),
-                Expanded(
-                  child: CancelButton(
-                    AppConstants.btnLogin,
-                    onPressed: () async {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
-                  ),
-                ),
-                Gap(2.w),
-              ],
-            ),
-            Gap(2.h),
-            Container(
-              padding: EdgeInsets.all(3.w),
+            Padding(
+              padding: EdgeInsets.all(4.w),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
-                    child: Text("PASSER", style: TextStyle(color: appWhite)),
-                  ),
-                  Spacer(),
                   ...List.generate(
                     demoData.length,
                     (index) => Padding(
@@ -130,17 +82,55 @@ class _IntroPageState extends State<IntroPage> {
                       child: DotIndicator(isActive: index == _pageIndex),
                     ),
                   ),
-                  Spacer(),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(3.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   TextButton(
                     onPressed: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Text(
+                      "PASSER",
+                      style: TextStyle(
+                        color: appBlack,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  FloatingActionButton.small(
+                    backgroundColor: appColor,
+                    shape: const CircleBorder(),
+                    onPressed: () {
                       if (_pageIndex + 1 < _nbreSlides) {
+                        // Aller à la page suivante
                         _pageController.nextPage(
                           curve: Curves.ease,
                           duration: const Duration(milliseconds: 300),
                         );
+                      } else {
+                        // Dernière page → Aller au Login
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                        );
                       }
                     },
-                    child: Text("SUIVANT", style: TextStyle(color: appWhite)),
+                    child: Icon(
+                      _pageIndex + 1 < _nbreSlides
+                          ? Icons
+                              .arrow_forward_outlined // Pages intermédiaires
+                          : Icons.check, // Dernière page
+                      color: appWhite,
+                    ),
                   ),
                 ],
               ),
@@ -165,34 +155,35 @@ class TestScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(child: Center(child: Image.asset(images))),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              titre,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: appColor,
-                fontSize: 22.sp,
-                fontWeight: FontWeight.bold,
+        Padding(
+          padding: EdgeInsets.all(4.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                titre,
+                style: TextStyle(
+                  color: appColor,
+                  fontSize: 22.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Gap(2.w),
-            Text(
-              subTitre,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.blueGrey,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.normal,
+              Gap(2.w),
+              Text(
+                subTitre,
+                style: TextStyle(
+                  color: Colors.blueGrey,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -207,48 +198,19 @@ class Onboard {
 
 final List<Onboard> demoData = [
   Onboard(
-    images: "assets/images/garde.png",
-    titre: "Pharmacie de garde",
-    subTitre:
-        "Accédez en un clic aux pharmacies de garde disponibles dans votre commune, 24h/24.",
+    images: "assets/intro/intro1.png",
+    titre: "Santé Afrique",
+    subTitre: "Infos fiables. Experts africains. Toujours avec vous.",
   ),
   Onboard(
-    images: "assets/images/prix.png",
-    titre: "Fiche et prix des médicaments",
-    subTitre:
-        "Consultez les prix des médicaments ainsi que la notice avant de vous rendre en pharmacie",
+    images: "assets/intro/intro2.png",
+    titre: "Accès illimité",
+    subTitre: "Créez votre compte. Abonnez-vous. Profitez sans limite.",
   ),
   Onboard(
-    images: "assets/images/assurance.png",
-    titre: "Assurances acceptées",
-    subTitre: "Vérifiez quelles pharmacies acceptent votre couverture santé.",
-  ),
-  Onboard(
-    images: "assets/images/recherche.png",
-    titre: "Recherche de médicaments",
-    subTitre:
-        "Envoyez une requête pour vérifier la disponibilité de vos médicaments "
-        "dans toutes les pharmacies de Côte d’Ivoire avec une option de réservation.",
-  ),
-  Onboard(
-    images: "assets/images/portefeuille.png",
-    titre: "Portefeuille électronique",
-    subTitre:
-        "Problème de jeton ? recevez votre petite monnaie directement "
-        "sur votre téléphone et réutilisez la plus tard dans toutes les autres pharmacies",
-  ),
-  Onboard(
-    images: "assets/images/vaccination.png",
-    titre: "Vaccination",
-    subTitre:
-        "Suivez vos calendriers vaccinaux, configurez des rappels et "
-        "accédez aux prix des vaccins en un clic.",
-  ),
-  Onboard(
-    images: "assets/images/store.png",
-    titre: "Store de produits Cosmétique",
-    subTitre:
-        "Achetez des produits de beauté et de bien-être en ligne et faites vous livrer.",
+    images: "assets/intro/intro3.png",
+    titre: "Carrière santé",
+    subTitre: "Publiez vos offres. Mettez votre CV. Trouvez des opportunités.",
   ),
 ];
 

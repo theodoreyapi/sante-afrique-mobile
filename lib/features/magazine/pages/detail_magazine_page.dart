@@ -79,6 +79,29 @@ class _DetailMagazinePageState extends State<DetailMagazinePage> {
                     ),
               ),
               Gap(1.h),
+              // affiche apres connexion
+              SubmitButton(
+                "Lire",
+                fontSize: 18.sp,
+                onPressed:
+                    () => showBarModalBottomSheet(
+                      barrierColor: appColor,
+                      isDismissible: false,
+                      enableDrag: false,
+                      expand: true,
+                      topControl: Align(
+                        alignment: Alignment.centerLeft,
+                        child: FloatingActionButton.small(
+                          backgroundColor: Colors.white,
+                          onPressed: () => Navigator.pop(context),
+                          child: Icon(Icons.close, color: appBlack),
+                        ),
+                      ),
+                      context: context,
+                      builder: (_) => LirePage(),
+                    ),
+              ),
+              Gap(1.h),
               SubmitButton(
                 AppConstants.btnConnexion,
                 fontSize: 18.sp,

@@ -48,6 +48,7 @@ dependencies:
   marquee: ^2.3.0
   carousel_slider: ^5.1.1
   youtube_player_flutter: ^9.1.2
+  pdfx: ^2.9.2
 
 dev_dependencies:
   flutter_test:
@@ -64,3 +65,4 @@ flutter:
     - assets/slide/
     - assets/news/
     - assets/magas/
+    - assets/intro/
